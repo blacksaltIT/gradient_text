@@ -9,6 +9,7 @@ class GradientText extends StatelessWidget {
       this.style,
       this.textAlign = TextAlign.left,
       this.autosize = false,
+      this.maxLines,
       this.textScaleFactor});
 
   final String data;
@@ -17,6 +18,7 @@ class GradientText extends StatelessWidget {
   final TextAlign textAlign;
   final double textScaleFactor;
   final bool autosize;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +26,25 @@ class GradientText extends StatelessWidget {
       shaderCallback: (bounds) {
         return gradient.createShader(Offset.zero & bounds.size);
       },
-      child: autosize ? AutoSizeText(
-        data,
-        textScaleFactor: textScaleFactor,
-        textAlign: textAlign,
-        style: (style == null)
-            ? TextStyle(color: Colors.white)
-            : style.copyWith(color: Colors.white),
-      ): Text(
-        data,
-        textScaleFactor: textScaleFactor,
-        textAlign: textAlign,
-        style: (style == null)
-            ? TextStyle(color: Colors.white)
-            : style.copyWith(color: Colors.white),
-      ),
+      child: autosize
+          ? AutoSizeText(
+              data,
+              maxLines: maxLines,
+              textScaleFactor: textScaleFactor,
+              textAlign: textAlign,
+              style: (style == null)
+                  ? TextStyle(color: Colors.white)
+                  : style.copyWith(color: Colors.white),
+            )
+          : Text(
+              data,
+              textScaleFactor: textScaleFactor,
+              textAlign: textAlign,
+              maxLines: maxLines,
+              style: (style == null)
+                  ? TextStyle(color: Colors.white)
+                  : style.copyWith(color: Colors.white),
+            ),
     );
   }
 }
